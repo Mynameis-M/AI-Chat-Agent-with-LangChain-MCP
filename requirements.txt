@@ -1,0 +1,18 @@
+# Chat UI Framework
+chainlit==2.9.4
+
+# LLM Orchestration
+langchain==1.2.0
+langchain-openai==1.1.6
+
+# HTTP requests for tools
+httpx>=0.28.1
+
+# Environment variable management
+python-dotenv>=1.2.1
+
+# MCP Integration
+mcp>=1.25.0
+
+# MCP Adapters
+langchain-mcp-adapters==0.2.1
