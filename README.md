@@ -149,20 +149,18 @@ This implementation visualizes the agent's tool usage directly within the Chainl
 ## Project Structure
 
 ```text
-project/
+AI-Agent-System-with-LangChain-MCP/
+│
+├── README.md
+├── requirements.txt
+├── .env.example
+├── .gitignore
 │
 ├── solutions/
-│   ├── phase-02/
-│   ├── phase-03/
-│   ├── phase-04/
-│   ├── phase-05/
-│   └── phase-06/
-│
-├── tools.py
-├── requirements.txt
-├── README.md
-├── .env.example
-└── .gitignore
+│   ├── phase-03-basic-chat-memory/
+│   ├── phase-04-langchain-agent/
+│   ├── phase-05-agent-tools/
+│   └── phase-06-mcp-integration/
 ```
 
 ---
