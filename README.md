@@ -157,10 +157,11 @@ AI-Agent-System-with-LangChain-MCP/
 ├── .gitignore
 │
 ├── solutions/
-│   ├── phase-03-basic-chat-memory/
-│   ├── phase-04-langchain-agent/
-│   ├── phase-05-agent-tools/
-│   └── phase-06-mcp-integration/
+│   ├── phase-02/
+│   ├── phase-03/
+│   ├── phase-04/
+│   ├── phase-05/
+│   └── phase-06/
 ```
 
 ---
