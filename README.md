@@ -1,124 +1,243 @@
-Welcome to the sample GitHub ReadME! Use this template as an outline for your data analytics projects. Include one ReadME per repository, with each repository storing one project. Remember, it's better to have quality over quantity - having 2 stellar business-relevant projects stands out much more than 3+ mediocre projects. Feel free to make a copy of this or fork this repository and make it your own. Happy portfolio-ing :) 
+# AI Agent System with LangChain & MCP
+
+An AI-powered conversational agent built using LangChain and Chainlit with support for streaming responses, session-based conversation memory, tool-augmented reasoning, and MCP (Model Context Protocol) integration.
+
+The project progressively evolved from a basic LLM connection into a multi-tool AI agent capable of dynamically retrieving external documentation and real-time weather data through both local tools and remote MCP servers.
+
+---
+
+## Features
+
+- Real-time streaming responses using Chainlit
+- Session-based conversation memory
+- LangChain agent orchestration
+- Tool-calling capabilities with external APIs
+- MCP integration for dynamic documentation retrieval
+- Async multi-tool execution workflow
+- Interactive tool execution visualization
+- External weather API integration
+- Dynamic LangChain documentation search via MCP
+
+---
+
+## Demo
+
+### Multi-tool Agent Workflow
+
+The agent dynamically invokes:
+- `get_weather` for real-time weather retrieval
+- `search_docs_by_lang_chain` via MCP for LangChain documentation lookup
+
+Example query:
+
+```text
+Check Paris weather and explain LangChain agents
+```
+
+Example workflow:
+1. Agent calls weather tool
+2. Agent retrieves weather information
+3. Agent calls MCP documentation tool
+4. Agent searches LangChain documentation
+5. Agent combines both tool outputs into a final response
+
+---
+
+## Screenshots
+
+### AI Agent Chat Interface
+<img width="611" height="520" alt="Screenshot 2026-05-25 225021" src="https://github.com/user-attachments/assets/7afbd8e6-e836-4314-9c3d-150f99ca573b" />
+">
+---
+
+## System Architecture
+
+```text
+User
+ ↓
+Chainlit UI
+ ↓
+LangChain Agent
+ ├── Conversation Memory
+ ├── Weather Tool
+ └── MCP Tool Server
+         ↓
+   LangChain Documentation Search
+```
+
+---
+
+## Tech Stack
+
+- Python
+- LangChain
+- Chainlit
+- GitHub Models
+- WeatherAPI
+- MCP (Model Context Protocol)
 
 
+---
 
+## Project Evolution
 
-# Project Background
-Backround about the company, including the industry, active years, business model, and key business metrics. Explain this from the POV of a data analyst who is working at the company.
+The project was developed progressively across multiple phases:
 
-Insights and recommendations are provided on the following key areas:
+| Phase | Description |
+|------|-------------|
+| Phase 2 | GitHub Models connection setup |
+| Phase 3 | Chainlit chat interface with conversation memory |
+| Phase 4 | LangChain agent integration |
+| Phase 5 | Tool-augmented agent with weather API |
+| Phase 6 | MCP integration with remote documentation tools |
 
-- **Category 1:** 
-- **Category 2:** 
-- **Category 3:** 
-- **Category 4:** 
+This phased structure demonstrates iterative development and increasing system complexity.
 
-The SQL queries used to inspect and clean the data for this analysis can be found here [link].
+---
 
-Targed SQL queries regarding various business questions can be found here [link].
+## Example: Agent Setup
 
-An interactive Tableau dashboard used to report and explore sales trends can be found here [link].
+```python
+agent = create_agent(
+    model=llm,
+    tools=[*TOOLS, *mcp_tools],
+    system_prompt=SYSTEM_PROMPT,
+)
+```
 
+This allows the agent to dynamically:
+- reason about tasks
+- decide which tools to use
+- execute external tools
+- integrate tool results into responses
 
+---
 
-# Data Structure & Initial Checks
+## Example: MCP Tool Integration
 
-The companies main database structure as seen below consists of four tables: table1, table2, table3, table4, with a total row count of X records. A description of each table is as follows:
-- **Table 2:**
-- **Table 3:**
-- **Table 4:**
-- **Table 5:**
+```python
+mcp_client = MultiServerMCPClient(
+    {
+        "langchain_docs": {
+            "transport": "http",
+            "url": "https://docs.langchain.com/mcp",
+        }
+    }
+)
 
-[Entity Relationship Diagram here]
+mcp_tools = await mcp_client.get_tools()
+```
 
+The MCP integration enables dynamic retrieval of external tools from remote MCP servers.
 
+---
 
-# Executive Summary
+## Example: Tool Execution Visualization
 
-### Overview of Findings
+```python
+if isinstance(msg, AIMessage) and msg.tool_calls:
+    for tool_call in msg.tool_calls:
+        step = cl.Step(f"🔧 {tool_call['name']}", type="tool")
+        step.input = tool_call["args"]
+        await step.send()
+```
 
-Explain the overarching findings, trends, and themes in 2-3 sentences here. This section should address the question: "If a stakeholder were to take away 3 main insights from your project, what are the most important things they should know?" You can put yourself in the shoes of a specific stakeholder - for example, a marketing manager or finance director - to think creatively about this section.
+This implementation visualizes the agent's tool usage directly within the Chainlit interface.
 
-[Visualization, including a graph of overall trends or snapshot of a dashboard]
+---
 
+## Project Structure
 
+```text
+project/
+│
+├── solutions/
+│   ├── phase-02/
+│   ├── phase-03/
+│   ├── phase-04/
+│   ├── phase-05/
+│   └── phase-06/
+│
+├── tools.py
+├── requirements.txt
+├── README.md
+├── .env.example
+└── .gitignore
+```
 
-# Insights Deep Dive
-### Category 1:
+---
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+## Installation
 
-[Visualization specific to category 1]
+### Clone Repository
 
+```bash
+git clone https://github.com/Mynameis-M/AI-Chat-Agent-with-LangChain-MCP.git
+cd AI-Chat-Agent-with-LangChain-MCP
+```
 
-### Category 2:
+---
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+### Create Virtual Environment
 
-[Visualization specific to category 2]
+```bash
+python -m venv .venv
+```
 
+Activate environment:
 
-### Category 3:
+#### Windows
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+```bash
+.venv\Scripts\activate
+```
 
-[Visualization specific to category 3]
+#### Mac/Linux
 
+```bash
+source .venv/bin/activate
+```
 
-### Category 4:
+---
 
-* **Main insight 1.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 2.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 3.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
-  
-* **Main insight 4.** More detail about the supporting analysis about this insight, including time frames, quantitative values, and observations about trends.
+### Install Dependencies
 
-[Visualization specific to category 4]
+```bash
+pip install -r requirements.txt
+```
 
+---
 
+## Environment Variables
 
-# Recommendations:
+Create a `.env` file:
 
-Based on the insights and findings above, we would recommend the [stakeholder team] to consider the following: 
+```env
+GITHUB_TOKEN=your_github_token
+WEATHER_API_KEY=your_weather_api_key
+```
 
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
-* Specific observation that is related to a recommended action. **Recommendation or general guidance based on this observation.**
-  
+---
 
+## Run Application
 
-# Assumptions and Caveats:
+```bash
+chainlit run app.py -w
+```
 
-Throughout the analysis, multiple assumptions were made to manage challenges with the data. These assumptions and caveats are noted below:
+---
 
-* Assumption 1 (ex: missing country records were for customers based in the US, and were re-coded to be US citizens)
-  
-* Assumption 1 (ex: data for December 2021 was missing - this was imputed using a combination of historical trends and December 2020 data)
-  
-* Assumption 1 (ex: because 3% of the refund date column contained non-sensical dates, these were excluded from the analysis)
+## Key Learning Outcomes
+
+Through this project, I explored:
+
+- LLM orchestration using LangChain agents
+- Tool-augmented AI workflows
+- MCP-based tool integration
+- Asynchronous agent execution
+- Conversation memory management
+- Real-time response streaming
+- Dynamic tool discovery
+- Interactive AI application development
+
+---
